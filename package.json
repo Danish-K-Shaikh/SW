@@ -12,6 +12,10 @@
     "s": "^0.1.1",
     "web-push": "^3.2.2"
   },
+  "repository":{
+    "type":"git",
+    "url":"https://github.com/Danish-K-Shaikh/SW"
+  },
   "devDependencies": {},
   "scripts": {
     "start" : "node file_ex.js",

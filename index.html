@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>This is demo page</title>
+	<script type="text/javascript">
+	// var promiseMe=new promiseMe(cb){
+	// 		cb =function(res,rej){
+	// 			res=function("");
+	// 			if(!res(value)){
+	// 				this.then= function(value){
+
+	// 				}
+	// 			}
+	// 			if(!rej(value)){
+	// 				this.catch= function(value){
+						
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+
+	function promiseMe(cb){
+		var then_cb,catch_cb;
+		this.resolve = v => then_cb(v);
+		this.reject = v => catch_cb(v);
+		this.then = cb => {
+			then_cb = cb;
+			return this;
+		}
+		this.catch = cb => {
+			catch_cb = cb;
+			return this;
+		}
+		cb(this.resolve,this.reject);
+	}	
+
+
+	var pro = new promiseMe(function(res,rej){
+		setTimeout(function(){
+			rej("This is resolved value");
+		},1000)
+	});
+
+	pro.then(function(value){
+		console.log(value);
+	}).catch(function(value){
+		console.log("Error : ",value);
+	})
+
+
+	</script>
+</head>
+<body>
+		<input type="text" name="">
+		<input type="button" value="ClickMe" onclick="onClickBtn()" name="">
+</body>
+</html>

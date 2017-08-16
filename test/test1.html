@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		
+		$.ajax({
+           url: "/datafetch",
+           error: function(response){
+            	var elem=document.createElement("div");
+        	 	document.getElementsByTagName('body')[0].appendChild(elem);
+  				elem.innerHTML = " u r offline";  
+           }
+       	});
+		if("serviceWorker" in navigator){
+			navigator.serviceWorker.register("sw").then(function(){
+				console.log("sw registered");
+			}).catch(function(err){
+				console.log("Erorr ",err);
+			})
+		}
+	</script>
+</head>
+<body>
+	<img src="http://www.dreamracing.com/cars/race_cars/huracangt/HuracanGT.png">
+</body>
+</html>

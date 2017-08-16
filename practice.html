@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript">
+	function myfunc(){
+		var divv=document.createElement("div");
+		var formm=document.createElement("form");
+		var header=document.createElement("h1");
+		header.innerHTML="Heading";
+		var labell=document.createElement("label");
+		var text=document.createElement("input");
+		var clear=document.createElement("input");
+		var submit=document.createElement("input");
+		text.setAttribute("type","text");
+		clear.setAttribute("type","reset");
+		clear.setAttribute("value","clear");
+		submit.setAttribute("type","submit");
+
+		document.body.appendChild(divv);
+		document.getElementsByTagName("div")[0].appendChild(formm);
+		document.getElementsByTagName("div")[0].prepend(header);
+		divv.insertBefore(labell,formm);
+		formm.appendChild(text);
+		formm.appendChild(clear);
+		formm.insertBefore(submit,clear);
+	}
+	</script>	
+</head>
+<body onload="myfunc()">
+	
+	
+</body>
+</html>

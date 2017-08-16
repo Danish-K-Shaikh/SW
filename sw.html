@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		
+		// Notification.requestPermission().then(function(e){
+		// 	var x = new Notification("This is the title",{
+		// 		body:"<span style='font-style:italic'>body</span>",
+		// 		tag : "msg1",
+		// 		icon : "https://lh3.googleusercontent.com/VMhNdwD6dEukMpEoX9muTVHfdNdR61_isd0VWongciNOUQjQ5Zlm5habSTplvQM3J00=w300-rw" 
+		// 	});
+		// 	x.onclick =  function(){
+		// 		window.open("https://www.facebook.com","_blank");
+		// 	}
+		// });
+
+
+		function urlBase64ToUint8Array(base64String) {
+		  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+		  const base64 = (base64String + padding)
+		    .replace(/\-/g, '+')
+		    .replace(/_/g, '/');
+		 
+		  const rawData = window.atob(base64);
+		  const outputArray = new Uint8Array(rawData.length);
+		 
+		  for (let i = 0; i < rawData.length; ++i) {
+		    outputArray[i] = rawData.charCodeAt(i);
+		  }
+		  return outputArray;
+		}
+	 	var vapidPublicKey;
+	 	var convertedVapidKey;
+		$.ajax({
+			url:"/publicKey"
+		}).done(function(data){
+			console.log(data);
+				vapidPublicKey=data;
+				convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
+				registerSW();
+		})
+
+		function registerSW(){
+			if('serviceWorker' in navigator)
+			{
+				navigator.serviceWorker.register("mysw.js").then(function(reg){
+					reg.pushManager.getSubscription().then(function(data){
+						console.log("Subscription : ",data);
+					})
+					reg.pushManager.subscribe({
+					  userVisibleOnly: true,
+					  applicationServerKey: convertedVapidKey
+					}).then(function(ps){
+						$.ajax({
+							url:"pushSubscribe"
+						})
+					}).catch(function(err){
+						console.log("Error Subscribing : ",err);
+					});				
+				});
+			}
+			$.ajax({
+				url:"/err",
+				error:function(err){
+					document.getElementsByClassName("network")[0].innerHTML = "Oops !!.. Please Check Your Network !!!";
+				}
+			});
+		}
+	</script>
+</head>
+<body>
+	<div class="network"></div>
+	This is an serviceWorker Page Updated
+	<img src="https://www.planet-source-code.com/vb/2010Redesign/images/LangugeHomePages/HTML5_CSS_JavaScript.png">
+</body>
+</html>	

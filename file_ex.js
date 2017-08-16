@@ -6,7 +6,8 @@ var serv = http.createServer(function(req,res){
 			'Content-type':'text/html',
 			'name'		  : 'danish'
 		});
-		fs.createReadStream("practice.html").pipe(res);
+		res.end("demoApp");
+		// fs.createReadStream("practice.html").pipe(res);
 	}
 	else if(req.url=="/sw"){
 		res.writeHead(200,{
@@ -43,4 +44,4 @@ var serv = http.createServer(function(req,res){
 		});
 		res.end("Page really not found");
 	}
-}).listen(3000);
+}).listen(5000);
